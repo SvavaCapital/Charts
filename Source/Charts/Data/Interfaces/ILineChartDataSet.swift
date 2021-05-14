@@ -8,7 +8,6 @@
 //
 //  https://github.com/danielgindi/Charts
 //
-
 import Foundation
 import CoreGraphics
 
@@ -24,6 +23,12 @@ public protocol ILineChartDataSet: ILineRadarChartDataSet
     ///
     /// **default**: Linear
     var mode: LineChartDataSet.Mode { get set }
+    
+    /// If true, gradient lines are drawn instead of solid
+    var isDrawLineWithGradientEnabled: Bool { get set }
+
+    /// The points where gradient should change color
+    var gradientPositions: [CGFloat]? { get set }
     
     /// Intensity for cubic lines (min = 0.05, max = 1)
     ///

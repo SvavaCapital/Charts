@@ -8,7 +8,6 @@
 //
 //  https://github.com/danielgindi/Charts
 //
-
 import Foundation
 import CoreGraphics
 
@@ -67,6 +66,10 @@ open class LineChartDataSet: LineRadarChartDataSet, ILineChartDataSet
             _cubicIntensity = newValue.clamped(to: 0.05...1)
         }
     }
+    
+    open var isDrawLineWithGradientEnabled = false
+
+    open var gradientPositions: [CGFloat]?
         
     /// The radius of the drawn circles.
     open var circleRadius = CGFloat(8.0)
