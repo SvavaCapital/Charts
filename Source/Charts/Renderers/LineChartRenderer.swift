@@ -186,14 +186,14 @@ open class LineChartRenderer: LineRadarRenderer
                 drawCubicFill(context: context, dataSet: dataSet, spline: fillPath!, matrix: valueToPixelMatrix, bounds: _xBounds)
             }
         }
-        else {
-            context.beginPath()
-            context.addPath(cubicPath)
-            context.setStrokeColor(drawingColor.cgColor)
-            context.strokePath()
-            
-            context.restoreGState()
-        }
+
+        context.beginPath()
+        context.addPath(cubicPath)
+        context.setStrokeColor(drawingColor.cgColor)
+        context.strokePath()
+        
+        context.restoreGState()
+
     }
     
     @objc open func drawHorizontalBezier(context: CGContext, dataSet: ILineChartDataSet, fill: Bool)
