@@ -28,6 +28,9 @@ open class BarChartData: BarLineScatterCandleBubbleChartData
     ///
     /// **default**: 0.85
     @objc open var barWidth = Double(0.85)
+    /// Boolean to control if bar corners are rounded or not
+    /// **default**: false
+    @objc open var isBarRounded = Bool(false)
     
     /// Groups all BarDataSet objects this data object holds together by modifying the x-value of their entries.
     /// Previously set x-values of entries will be overwritten. Leaves space between bars and groups as specified by the parameters.

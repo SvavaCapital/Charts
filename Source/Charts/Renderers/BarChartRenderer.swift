@@ -431,7 +431,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            fillBar(context: context, dataSet: dataSet, index: j, barRect: barRect, label: "bar")
             
             if drawBorder
             {
@@ -457,6 +457,28 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         }
         
         context.restoreGState()
+    }
+
+    @objc open func fillBar(context: CGContext, dataSet: BarChartDataSetProtocol, index: Int, barRect: CGRect, label: String)
+    {
+        guard let dataProvider = dataProvider else { return }
+        guard let barData = dataProvider.barData else { return }
+
+        let isBarRounded = barData.isBarRounded
+        if isBarRounded {
+            let yValue = dataSet.entryForIndex(index)?.y ?? 0
+            print(label, yValue)
+            var bezierPath: UIBezierPath
+            if yValue >= 0 {
+                bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: barRect.size.width, height: barRect.size.width))
+            } else {
+                bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: barRect.size.width, height: barRect.size.width))
+            }
+            context.addPath(bezierPath.cgPath)
+            context.drawPath(using: .fill)
+        } else {
+            context.fill(barRect)
+        }
     }
     
     open func prepareBarHighlight(
@@ -811,7 +833,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                context.fill(barRect)
+                fillBar(context: context, dataSet: set, index: set.entryIndex(entry: e), barRect: barRect, label: "highlight")
             }
         }
         
