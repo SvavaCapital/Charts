@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "ChartsGradient"
-  s.version = "3.4.8"
+  s.version = "3.4.9"
   s.summary = "Charts is a powerful & easy to use chart library for iOS, tvOS and OSX (and Android)"
   s.homepage = "https://github.com/SvavaCapital/Charts"
   s.license = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
