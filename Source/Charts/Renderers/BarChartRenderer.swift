@@ -461,15 +461,16 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         guard let dataProvider = dataProvider else { return }
         guard let barData = dataProvider.barData else { return }
 
+        let radius = barRect.size.width / 2
         let isBarRounded = barData.isBarRounded
         if isBarRounded {
             let yValue = dataSet.entryForIndex(index)?.y ?? 0
             print(label, yValue)
             var bezierPath: UIBezierPath
             if yValue >= 0 {
-                bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: barRect.size.width, height: barRect.size.width))
+                bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: radius, height: radius))
             } else {
-                bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: barRect.size.width, height: barRect.size.width))
+                bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: radius, height: radius))
             }
             context.addPath(bezierPath.cgPath)
             context.drawPath(using: .fill)
