@@ -11,10 +11,7 @@
 
 import Foundation
 import CoreGraphics
-
-#if canImport(UIKit)
-    import UIKit
-#endif
+import UIKit
 
 #if canImport(Cocoa)
 import Cocoa
@@ -459,7 +456,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         context.restoreGState()
     }
 
-    @objc open func fillBar(context: CGContext, dataSet: BarChartDataSetProtocol, index: Int, barRect: CGRect, label: String)
+    @objc open func fillBar(context: CGContext, dataSet: IBarChartDataSet, index: Int, barRect: CGRect, label: String)
     {
         guard let dataProvider = dataProvider else { return }
         guard let barData = dataProvider.barData else { return }
