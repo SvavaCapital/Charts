@@ -465,7 +465,6 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         let isBarRounded = barData.isBarRounded
         if isBarRounded {
             let yValue = dataSet.entryForIndex(index)?.y ?? 0
-            print(label, yValue)
             var bezierPath: UIBezierPath
             if yValue >= 0 {
                 bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: radius, height: radius))
@@ -473,7 +472,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: radius, height: radius))
             }
             context.addPath(bezierPath.cgPath)
-            context.drawPath(using: .fill)
+            if label == "highlight" {
+                context.setStrokeColor(dataSet.highlightColor.cgColor)
+                context.setLineWidth(2)
+                context.drawPath(using: .fillStroke)
+            } else {
+                context.drawPath(using: .fill)
+            }
         } else {
             context.fill(barRect)
         }
@@ -798,9 +803,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
                 
-                context.setFillColor(set.highlightColor.cgColor)
+                context.setFillColor(UIColor.clear.cgColor)
                 context.setAlpha(set.highlightAlpha)
-                
+
                 let isStack = high.stackIndex >= 0 && e.isStacked
                 
                 let y1: Double
