@@ -462,25 +462,21 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         guard let barData = dataProvider.barData else { return }
 
         let radius = barRect.size.width / 2
-        let isBarRounded = barData.isBarRounded
-        if isBarRounded {
-            let yValue = dataSet.entryForIndex(index)?.y ?? 0
-            var bezierPath: UIBezierPath
-            if yValue >= 0 {
-                bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: radius, height: radius))
-            } else {
-                bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: radius, height: radius))
-            }
-            context.addPath(bezierPath.cgPath)
-            if label == "highlight" {
-                context.setStrokeColor(dataSet.highlightColor.cgColor)
-                context.setLineWidth(2)
-                context.drawPath(using: .fillStroke)
-            } else {
-                context.drawPath(using: .fill)
-            }
+        let barCornerRadius = barData.barCornerRadius >= 0 ? CGFloat(barData.barCornerRadius) : radius
+        let yValue = dataSet.entryForIndex(index)?.y ?? 0
+        var bezierPath: UIBezierPath
+        if yValue >= 0 {
+            bezierPath = UIBezierPath(roundedRect: barRect, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: barCornerRadius, height: barCornerRadius))
         } else {
-            context.fill(barRect)
+            bezierPath = UIBezierPath(roundedRect:barRect, byRoundingCorners:[.bottomRight, .bottomLeft], cornerRadii: CGSize(width: barCornerRadius, height: barCornerRadius))
+        }
+        context.addPath(bezierPath.cgPath)
+        if label == "highlight" {
+            context.setStrokeColor(dataSet.highlightColor.cgColor)
+            context.setLineWidth(2)
+            context.drawPath(using: .fillStroke)
+        } else {
+            context.drawPath(using: .fill)
         }
     }
     

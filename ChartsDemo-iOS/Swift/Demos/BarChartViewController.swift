@@ -137,7 +137,7 @@ class BarChartViewController: DemoBaseViewController {
             let data = BarChartData(dataSet: set1)
             data.setValueFont(UIFont(name: "HelveticaNeue-Light", size: 10)!)
             data.barWidth = 1
-            data.isBarRounded = true
+            data.barCornerRadius = 10
             chartView.data = data
         }
         
